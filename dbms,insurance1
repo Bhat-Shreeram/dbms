@@ -91,4 +91,6 @@ from participated));
 select max(damage_amount )
 from participated ;
 
-
+delete from participated
+where damage_amount<(select t.amt from (select avg(damage_amount) amt 
+from participated) t)
