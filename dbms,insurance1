@@ -1,0 +1,76 @@
+create database insurance1;
+create table person
+(
+driver_id varchar(10),
+name varchar(20),
+address varchar(30),
+primary key(driver_id)
+);
+create table car(
+reg_num varchar(10),
+model varbinary(10),
+year int,
+primary key(reg_num)
+);
+create table owns(
+driver_id varchar(10),
+reg_num varchar(10),
+primary key(driver_id,reg_num),
+foreign key(driver_id) references person(driver_id),
+foreign key(reg_num) references car(reg_num)
+);
+
+create table accident(
+report_num int,
+accident_date date,
+location varchar(20),
+primary key(report_num)
+);
+create table participated
+(
+driver_id varchar(10),
+reg_num varchar(10),
+report_num int,
+damage_amount int,
+primary key(driver_id,reg_num,report_num),
+foreign key(reg_num) references car(reg_num),
+foreign key(driver_id) references person(driver_id),
+foreign key(report_num) references accident(report_num)
+);
+
+insert into accident values(1,'2020-01-05','mysur road');
+insert into accident values(2,'2020-02-10','south end circle');
+insert into accident values(3,'2020-03-15','bull temple road');
+insert into accident values(4,'2020-04-20','mysur road');
+insert into accident values(5,'2020-05-25','srinivasnagar');
+
+insert into person values('a10','varun','bengaluru');
+insert into person values('a26','shreeram','uttarakannada');
+insert into person values('a20','aasha','shivamogga');
+insert into person values('a43','ganapati','mysuru');
+insert into person values('a56','shreesha','udupi');
+
+insert into car values('KA0123','indica','1990');
+insert into car values('KA3210','lancer','1957');
+insert into car values('KA45689','toyota','1998');
+insert into car values('KA25685','honda','2008');
+insert into car values('KA6940','audi','2005');
+
+insert into owns values('a10','KA0123');
+insert into owns values('a26','KA3210');
+insert into owns values('a20','KA45689');
+insert into owns values('a43','KA25685');
+insert into owns values('a56','KA6940');
+
+insert into participated values('a10','KA0123',1,25000);
+insert into participated values('a26','KA3210',2,2000);
+insert into participated values('a20','KA45689',3,40000);
+insert into participated values('a43','KA25685',4,10000);
+insert into participated values('a56','KA6940',5,5000);
+
+/*update*/
+update participated set damage_amount=25000
+where reg_num='KA6940'and report_num=5;
+
+/*insert*/
+insert into accident values(6,'2020-07-5','national college');
