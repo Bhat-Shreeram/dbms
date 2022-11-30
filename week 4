@@ -1,0 +1,23 @@
+
+ /*query 4*/
+  select * from branch;
+select branch_name
+from branch
+where asets>(select  max(asets) from branch where branch_city="bangalore");
+
+/*query 5*/
+ delete
+ from bank_account
+ where branch_name in(select branch_name  from branch where branch_city="bombay");
+ 
+ select* from bank_account;
+ 
+ /*quer6*/
+ update bank_account
+ set balance=balance+balance*.05;
+ select * from bank_account;
+ 
+ /*spot query*/
+ select branch_name
+from branch
+where asets>(select  sum(asets) from branch where branch_city="bangalore");
