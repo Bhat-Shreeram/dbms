@@ -21,3 +21,23 @@ where asets>(select  max(asets) from branch where branch_city="bangalore");
  select branch_name
 from branch
 where asets>(select  sum(asets) from branch where branch_city="bangalore");
+ /*3*/
+ select b.customer_name
+from borrower b
+where b.loan_num= any(select l.loan_num
+		               from loan l 
+                       where l.branch_name=any( select branch_name
+												from branch 
+                                                where branch_city ="banglore")
+/*2*/
+select customer_name
+ from borrower
+ where customer_name not in( 
+								select customer_name
+                                 from depositor
+                                 );
+                                 
+/*1*/
+ select distinct d.customer_name 
+ from depositer d,bank_account a,branch b
+ where d.account=a.account and a.branch_name=b.branch_name and b.branch_city="delhi";
