@@ -1,0 +1,51 @@
+Query
+List the name of the manager with the maximum employees.
+select m.ename,count(*)
+from employee e,employee m
+where e.mgrno= m.empno
+group by m.ename
+having count(*)=(select max(mycount)
+from(select count(*)mycount
+from employee
+group by mgrno)a);
+
+Query
+Display those managers name whose salary is more than average salary of his
+employee.
+select m.ename
+from employee m
+where sal>=(select avg(e.sal)
+from employee e
+where m.empno=e.mgrno
+group by e.mgrno);
+
+Query
+Find the name of the second top level managers of each department.
+Select e.ename
+From employee e
+Where e.empno
+In (select e.mgrno
+From employee e
+Where e.empno in (select mgrno from employee));
+
+Query
+Find the employee details who got second maximum incentives in november
+2008.
+
+select*
+from employee e,incentives i
+
+where e.empno=i.empno and i.incentivedate like "2008-11%"and 2=
+(select count(*)
+where i.incentiveamount<j.incentiveamount
+);
+
+Query
+Display those employee who are working in the same department where his
+manager is working.
+
+select *
+from employee e
+where e.deptno=(select m.deptno
+from employee m
+where e.mgrno=m.empno);
